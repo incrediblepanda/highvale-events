@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Highvale Events
 
-## Getting Started
+A sophisticated event planning website built with Next.js, TypeScript, and Tailwind CSS. Features a content management system (CMS) for easy content updates.
 
-First, run the development server:
+## 🚀 Features
+
+- **Modern Design**: Elegant, responsive design with sage green and gold color scheme
+- **Service Showcase**: Weddings, Bachelorette Parties, and Party Planning services
+- **Content Management**: Integrated Decap CMS for easy content editing
+- **Inquiry Forms**: Contact forms ready for HoneyBook CRM integration
+- **SEO Optimized**: Built with Next.js for optimal performance and SEO
+- **Responsive**: Beautiful on all devices
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **CMS**: Decap CMS (formerly Netlify CMS)
+- **Deployment**: Netlify
+- **Package Manager**: Bun
+
+## 📦 Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# Clone the repository
+git clone https://github.com/[your-username]/highvale-events.git
+
+# Navigate to the project
+cd highvale-events
+
+# Install dependencies
+bun install
+
+# Run development server
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The site is configured for deployment on Netlify:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Build for production
+bun run build
 
-## Learn More
+# The output will be in the 'out' directory
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 CMS Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Enable Netlify Identity in your Netlify dashboard
+2. Set registration to "Invite only"
+3. Enable Git Gateway
+4. Access CMS at `yourdomain.com/admin`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [CMS_GUIDE.md](./CMS_GUIDE.md) for detailed instructions.
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+highvale-events/
+├── src/
+│   ├── app/           # Next.js app directory
+│   ├── components/    # React components
+│   └── lib/          # Utility functions
+├── content/          # CMS content files
+├── public/           # Static assets
+│   └── admin/        # CMS configuration
+└── tailwind.config.ts # Tailwind configuration
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Customization
+
+- **Colors**: Edit `tailwind.config.ts` to change the color scheme
+- **Content**: Use the CMS at `/admin` or edit JSON files in `/content`
+- **Components**: Modify components in `/src/components`
+
+## 📄 License
+
+© 2024 Highvale Events. All rights reserved.
+
+## 🤝 Support
+
+For support, email info@highvaleevents.com
