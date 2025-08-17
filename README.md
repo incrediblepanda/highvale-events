@@ -1,5 +1,7 @@
 # Highvale Events
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR-SITE-ID/deploy-status)](https://app.netlify.com/sites/YOUR-SITE-NAME/deploys)
+
 A sophisticated event planning website built with Next.js, TypeScript, and Tailwind CSS. Features a content management system (CMS) for easy content updates.
 
 ## 🚀 Features
