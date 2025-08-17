@@ -1,0 +1,27 @@
+{
+  "sectionTitle": "Our Services",
+  "sectionSubtitle": "We specialize in creating memorable celebrations tailored to your unique vision.",
+  "services": [
+    {
+      "title": "Luxury Weddings",
+      "description": "Create the wedding of your dreams with our meticulous attention to detail and creative vision.",
+      "image": "",
+      "buttonText": "Plan Your Wedding",
+      "buttonLink": "/weddings"
+    },
+    {
+      "title": "Bachelorette Parties",
+      "description": "Celebrate the bride-to-be with an unforgettable experience tailored to her unique style and personality.",
+      "image": "",
+      "buttonText": "Start Planning",
+      "buttonLink": "/private-events"
+    },
+    {
+      "title": "Party Planning",
+      "description": "From intimate gatherings to grand celebrations, we bring your special occasions to life with elegance.",
+      "image": "",
+      "buttonText": "Explore Options",
+      "buttonLink": "/private-events"
+    }
+  ]
+}

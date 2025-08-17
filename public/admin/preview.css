@@ -1,0 +1,158 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Brand Colors */
+:root {
+  --sage: #2A3532;
+  --sage-dark: #1A2223;
+  --gold: #E4C78E;
+  --gold-dark: #C7A55F;
+  --cream: #FBFAF7;
+  --text-light: #E9EDF1;
+  --charcoal: #1A2223;
+}
+
+/* Typography */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--cream);
+  color: var(--sage);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  color: var(--sage);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+/* Gold Italic Styling */
+.gold-italic {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.button-gold {
+  background-color: var(--gold);
+  color: var(--charcoal);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-gold:hover {
+  background-color: var(--gold-dark);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+/* Preview Container */
+.preview-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Form Elements */
+input, textarea, select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(42, 53, 50, 0.2);
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(228, 199, 142, 0.2);
+}
+
+/* Sections */
+.section {
+  padding: 5rem 0;
+}
+
+.section-sage {
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+  color: var(--text-light);
+}
+
+.section-sage h1,
+.section-sage h2,
+.section-sage h3 {
+  color: white;
+}
+
+/* Testimonial Cards */
+.testimonial {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(228, 199, 142, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Image Placeholders */
+.image-placeholder {
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+  height: 200px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+/* Responsive Preview */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .preview-container {
+    padding: 1rem;
+  }
+}

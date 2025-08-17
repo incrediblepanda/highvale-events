@@ -1,0 +1,24 @@
+{
+  "sectionTitle": "Client Love",
+  "sectionSubtitle": "Hear from those who've experienced the Highvale difference.",
+  "testimonials": [
+    {
+      "name": "Sarah & Michael",
+      "eventType": "Wedding",
+      "content": "Highvale Events transformed our wedding into the most magical day of our lives. Every detail was perfect and their team made everything seamless.",
+      "image": ""
+    },
+    {
+      "name": "Emma T.",
+      "eventType": "Bachelorette Party",
+      "content": "The most incredible bachelorette weekend! They thought of everything and created memories that will last a lifetime.",
+      "image": ""
+    },
+    {
+      "name": "The Johnson Family",
+      "eventType": "Anniversary Celebration",
+      "content": "Our 25th anniversary party exceeded every expectation. The attention to detail and personal touches made it truly special.",
+      "image": ""
+    }
+  ]
+}
