@@ -1,7 +1,7 @@
-{
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  }
-}
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: { unoptimized: true }
+};
+
+module.exports = nextConfig;
+
