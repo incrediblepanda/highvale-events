@@ -1,0 +1,703 @@
+import { defineConfig } from 'tinacms';
+
+// Your hosting provider likely exposes this as an environment variable
+const branch = process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main';
+
+export default defineConfig({
+  branch,
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID, // Get this from tina.io
+  token: process.env.TINA_TOKEN, // Get this from tina.io
+
+  build: {
+    outputFolder: 'admin',
+    publicFolder: 'public',
+  },
+
+  media: {
+    tina: {
+      mediaRoot: 'images',
+      publicFolder: 'public',
+    },
+  },
+
+  // Visual editing configuration
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_SEARCH_TOKEN,
+      stopwordLanguages: ['eng'],
+    },
+    indexBatchSize: 100,
+    maxSearchIndexFieldLength: 100,
+  },
+
+  schema: {
+    collections: [
+      {
+        name: 'page',
+        label: 'Pages',
+        path: 'content/pages',
+        format: 'json',
+        ui: {
+          router: ({ document }) => {
+            if (document._sys.filename === 'home') {
+              return '/';
+            }
+            return `/${document._sys.filename}`;
+          },
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Page Title',
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: 'object',
+            list: true,
+            name: 'blocks',
+            label: 'Page Sections',
+            templates: [
+              heroBlockSchema,
+              servicesBlockSchema,
+              testimonialBlockSchema,
+              ctaBlockSchema,
+              contentBlockSchema,
+              galleryBlockSchema,
+            ],
+          },
+        ],
+      },
+      {
+        name: 'settings',
+        label: 'Site Settings',
+        path: 'content',
+        format: 'json',
+        ui: {
+          global: true,
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: 'object',
+            name: 'colors',
+            label: 'Brand Colors',
+            fields: [
+              {
+                type: 'string',
+                name: 'primary',
+                label: 'Primary Color',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'secondary',
+                label: 'Secondary Color',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'accent',
+                label: 'Accent Color',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'background',
+                label: 'Background Color',
+                ui: {
+                  component: 'color',
+                },
+              },
+              {
+                type: 'string',
+                name: 'text',
+                label: 'Text Color',
+                ui: {
+                  component: 'color',
+                },
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'typography',
+            label: 'Typography',
+            fields: [
+              {
+                type: 'string',
+                name: 'headingFont',
+                label: 'Heading Font',
+                options: [
+                  'Cormorant Garamond',
+                  'Playfair Display',
+                  'Merriweather',
+                  'Lora',
+                  'Inter',
+                ],
+              },
+              {
+                type: 'string',
+                name: 'bodyFont',
+                label: 'Body Font',
+                options: [
+                  'Inter',
+                  'Open Sans',
+                  'Roboto',
+                  'Lato',
+                  'Source Sans Pro',
+                ],
+              },
+              {
+                type: 'number',
+                name: 'baseFontSize',
+                label: 'Base Font Size (px)',
+              },
+              {
+                type: 'number',
+                name: 'headingScale',
+                label: 'Heading Scale Ratio',
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'spacing',
+            label: 'Global Spacing',
+            fields: [
+              {
+                type: 'number',
+                name: 'sectionPadding',
+                label: 'Section Padding (px)',
+              },
+              {
+                type: 'number',
+                name: 'containerMaxWidth',
+                label: 'Container Max Width (px)',
+              },
+              {
+                type: 'number',
+                name: 'mobileBreakpoint',
+                label: 'Mobile Breakpoint (px)',
+              },
+              {
+                type: 'number',
+                name: 'tabletBreakpoint',
+                label: 'Tablet Breakpoint (px)',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+});
+
+// Hero Block Schema
+const heroBlockSchema = {
+  name: 'hero',
+  label: 'Hero Section',
+  ui: {
+    defaultItem: {
+      headline: 'Welcome to Our Site',
+      tagline: 'Your tagline here',
+    },
+    itemProps: (item) => ({
+      label: item?.headline || 'Hero Section',
+    }),
+  },
+  fields: [
+    {
+      type: 'string',
+      name: 'headline',
+      label: 'Headline',
+    },
+    {
+      type: 'string',
+      name: 'tagline',
+      label: 'Tagline',
+    },
+    {
+      type: 'rich-text',
+      name: 'text',
+      label: 'Description',
+    },
+    {
+      type: 'image',
+      name: 'backgroundImage',
+      label: 'Background Image',
+    },
+    {
+      type: 'object',
+      name: 'style',
+      label: 'Styling',
+      fields: [
+        {
+          type: 'string',
+          name: 'textAlign',
+          label: 'Text Alignment',
+          options: ['left', 'center', 'right'],
+        },
+        {
+          type: 'string',
+          name: 'height',
+          label: 'Section Height',
+          options: ['auto', 'screen', 'large', 'medium', 'small'],
+        },
+        {
+          type: 'object',
+          name: 'padding',
+          label: 'Padding',
+          fields: [
+            { type: 'number', name: 'top', label: 'Top (px)' },
+            { type: 'number', name: 'bottom', label: 'Bottom (px)' },
+            { type: 'number', name: 'left', label: 'Left (px)' },
+            { type: 'number', name: 'right', label: 'Right (px)' },
+          ],
+        },
+        {
+          type: 'object',
+          name: 'margin',
+          label: 'Margin',
+          fields: [
+            { type: 'number', name: 'top', label: 'Top (px)' },
+            { type: 'number', name: 'bottom', label: 'Bottom (px)' },
+          ],
+        },
+        {
+          type: 'string',
+          name: 'backgroundColor',
+          label: 'Background Color',
+          ui: {
+            component: 'color',
+          },
+        },
+        {
+          type: 'string',
+          name: 'textColor',
+          label: 'Text Color',
+          ui: {
+            component: 'color',
+          },
+        },
+        {
+          type: 'string',
+          name: 'overlayOpacity',
+          label: 'Overlay Opacity',
+          options: ['0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'],
+        },
+      ],
+    },
+    {
+      type: 'object',
+      list: true,
+      name: 'actions',
+      label: 'Call to Action Buttons',
+      fields: [
+        {
+          type: 'string',
+          name: 'label',
+          label: 'Button Text',
+        },
+        {
+          type: 'string',
+          name: 'link',
+          label: 'Button Link',
+        },
+        {
+          type: 'string',
+          name: 'style',
+          label: 'Button Style',
+          options: ['primary', 'secondary', 'outline', 'ghost'],
+        },
+      ],
+    },
+  ],
+};
+
+// Services Block Schema
+const servicesBlockSchema = {
+  name: 'services',
+  label: 'Services Section',
+  fields: [
+    {
+      type: 'string',
+      name: 'headline',
+      label: 'Section Headline',
+    },
+    {
+      type: 'string',
+      name: 'subheadline',
+      label: 'Section Subheadline',
+    },
+    {
+      type: 'string',
+      name: 'columns',
+      label: 'Number of Columns',
+      options: ['1', '2', '3', '4', '6'],
+    },
+    {
+      type: 'object',
+      list: true,
+      name: 'services',
+      label: 'Services',
+      fields: [
+        {
+          type: 'string',
+          name: 'title',
+          label: 'Service Title',
+        },
+        {
+          type: 'rich-text',
+          name: 'description',
+          label: 'Service Description',
+        },
+        {
+          type: 'image',
+          name: 'image',
+          label: 'Service Image',
+        },
+        {
+          type: 'string',
+          name: 'buttonText',
+          label: 'Button Text',
+        },
+        {
+          type: 'string',
+          name: 'buttonLink',
+          label: 'Button Link',
+        },
+      ],
+    },
+    {
+      type: 'object',
+      name: 'style',
+      label: 'Section Styling',
+      fields: [
+        {
+          type: 'string',
+          name: 'backgroundColor',
+          label: 'Background Color',
+          ui: {
+            component: 'color',
+          },
+        },
+        {
+          type: 'object',
+          name: 'padding',
+          label: 'Section Padding',
+          fields: [
+            { type: 'number', name: 'top', label: 'Top (px)' },
+            { type: 'number', name: 'bottom', label: 'Bottom (px)' },
+          ],
+        },
+        {
+          type: 'string',
+          name: 'cardStyle',
+          label: 'Card Style',
+          options: ['minimal', 'shadow', 'border', 'gradient'],
+        },
+        {
+          type: 'string',
+          name: 'imagePosition',
+          label: 'Image Position',
+          options: ['top', 'left', 'right', 'background'],
+        },
+      ],
+    },
+  ],
+};
+
+// Testimonial Block Schema
+const testimonialBlockSchema = {
+  name: 'testimonials',
+  label: 'Testimonials Section',
+  fields: [
+    {
+      type: 'string',
+      name: 'headline',
+      label: 'Section Headline',
+    },
+    {
+      type: 'string',
+      name: 'layout',
+      label: 'Layout Style',
+      options: ['grid', 'carousel', 'masonry'],
+    },
+    {
+      type: 'object',
+      list: true,
+      name: 'testimonials',
+      label: 'Testimonials',
+      fields: [
+        {
+          type: 'string',
+          name: 'name',
+          label: 'Client Name',
+        },
+        {
+          type: 'string',
+          name: 'role',
+          label: 'Client Role/Event',
+        },
+        {
+          type: 'rich-text',
+          name: 'quote',
+          label: 'Testimonial Quote',
+        },
+        {
+          type: 'image',
+          name: 'image',
+          label: 'Client Photo',
+        },
+        {
+          type: 'number',
+          name: 'rating',
+          label: 'Rating (1-5)',
+        },
+      ],
+    },
+    {
+      type: 'object',
+      name: 'style',
+      label: 'Section Styling',
+      fields: [
+        {
+          type: 'string',
+          name: 'backgroundColor',
+          label: 'Background Color',
+          ui: {
+            component: 'color',
+          },
+        },
+        {
+          type: 'boolean',
+          name: 'showQuoteMarks',
+          label: 'Show Quote Marks',
+        },
+        {
+          type: 'boolean',
+          name: 'showRatings',
+          label: 'Show Star Ratings',
+        },
+      ],
+    },
+  ],
+};
+
+// CTA Block Schema
+const ctaBlockSchema = {
+  name: 'cta',
+  label: 'Call to Action Section',
+  fields: [
+    {
+      type: 'string',
+      name: 'headline',
+      label: 'Headline',
+    },
+    {
+      type: 'rich-text',
+      name: 'text',
+      label: 'Description',
+    },
+    {
+      type: 'object',
+      list: true,
+      name: 'buttons',
+      label: 'Buttons',
+      fields: [
+        {
+          type: 'string',
+          name: 'label',
+          label: 'Button Text',
+        },
+        {
+          type: 'string',
+          name: 'link',
+          label: 'Button Link',
+        },
+        {
+          type: 'string',
+          name: 'style',
+          label: 'Button Style',
+          options: ['primary', 'secondary', 'outline'],
+        },
+      ],
+    },
+    {
+      type: 'object',
+      name: 'style',
+      label: 'Section Styling',
+      fields: [
+        {
+          type: 'string',
+          name: 'backgroundStyle',
+          label: 'Background Style',
+          options: ['solid', 'gradient', 'image'],
+        },
+        {
+          type: 'string',
+          name: 'backgroundColor',
+          label: 'Background Color',
+          ui: {
+            component: 'color',
+          },
+        },
+        {
+          type: 'image',
+          name: 'backgroundImage',
+          label: 'Background Image',
+        },
+        {
+          type: 'string',
+          name: 'textAlign',
+          label: 'Text Alignment',
+          options: ['left', 'center', 'right'],
+        },
+      ],
+    },
+  ],
+};
+
+// Content Block Schema (for flexible content)
+const contentBlockSchema = {
+  name: 'content',
+  label: 'Content Section',
+  fields: [
+    {
+      type: 'string',
+      name: 'headline',
+      label: 'Section Headline',
+    },
+    {
+      type: 'rich-text',
+      name: 'content',
+      label: 'Content',
+      isBody: true,
+    },
+    {
+      type: 'string',
+      name: 'layout',
+      label: 'Layout',
+      options: ['single-column', 'two-column', 'sidebar-left', 'sidebar-right'],
+    },
+    {
+      type: 'object',
+      name: 'style',
+      label: 'Styling',
+      fields: [
+        {
+          type: 'object',
+          name: 'padding',
+          label: 'Padding',
+          fields: [
+            { type: 'number', name: 'top', label: 'Top (px)' },
+            { type: 'number', name: 'bottom', label: 'Bottom (px)' },
+            { type: 'number', name: 'left', label: 'Left (px)' },
+            { type: 'number', name: 'right', label: 'Right (px)' },
+          ],
+        },
+        {
+          type: 'string',
+          name: 'backgroundColor',
+          label: 'Background Color',
+          ui: {
+            component: 'color',
+          },
+        },
+        {
+          type: 'number',
+          name: 'maxWidth',
+          label: 'Max Width (px)',
+        },
+      ],
+    },
+  ],
+};
+
+// Gallery Block Schema
+const galleryBlockSchema = {
+  name: 'gallery',
+  label: 'Gallery Section',
+  fields: [
+    {
+      type: 'string',
+      name: 'headline',
+      label: 'Gallery Title',
+    },
+    {
+      type: 'string',
+      name: 'layout',
+      label: 'Gallery Layout',
+      options: ['grid', 'masonry', 'carousel', 'lightbox'],
+    },
+    {
+      type: 'string',
+      name: 'columns',
+      label: 'Number of Columns',
+      options: ['2', '3', '4', '5', '6'],
+    },
+    {
+      type: 'object',
+      list: true,
+      name: 'images',
+      label: 'Gallery Images',
+      fields: [
+        {
+          type: 'image',
+          name: 'image',
+          label: 'Image',
+        },
+        {
+          type: 'string',
+          name: 'caption',
+          label: 'Caption',
+        },
+        {
+          type: 'string',
+          name: 'alt',
+          label: 'Alt Text',
+        },
+      ],
+    },
+    {
+      type: 'object',
+      name: 'style',
+      label: 'Gallery Styling',
+      fields: [
+        {
+          type: 'number',
+          name: 'imageSpacing',
+          label: 'Image Spacing (px)',
+        },
+        {
+          type: 'string',
+          name: 'imageEffect',
+          label: 'Hover Effect',
+          options: ['none', 'zoom', 'fade', 'grayscale', 'blur'],
+        },
+        {
+          type: 'boolean',
+          name: 'showCaptions',
+          label: 'Show Captions',
+        },
+        {
+          type: 'string',
+          name: 'imageBorderRadius',
+          label: 'Border Radius',
+          options: ['none', 'small', 'medium', 'large', 'round'],
+        },
+      ],
+    },
+  ],
+};
