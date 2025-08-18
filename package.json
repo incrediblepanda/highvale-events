@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "bunx tsc --noEmit && next lint",
-    "format": "bunx biome format --write"
+    "format": "bunx biome format --write",
+    "dev:tina": "tinacms dev -c \"next dev -H 0.0.0.0\"",
+    "build:tina": "tinacms build && next build"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
