@@ -1,10 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  distDir: 'out',
-  images: {
-    unoptimized: true
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   }
-};
-
-module.exports = nextConfig;
+}
